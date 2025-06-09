@@ -1,0 +1,236 @@
+/* Base Styles */
+:root {
+    --primary-bg: #F8F9FA;
+    --secondary-bg: #F1F3F4;
+    --accent-color: #FF6B35;
+    --text-primary: #2D3748;
+    --text-secondary: #4A5568;
+    --border-color: #E2E8F0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+/* Custom styles */
+#micButton {
+    transition: transform 0.2s ease-in-out;
+}
+
+#micButton:hover {
+    transform: scale(1.1);
+}
+
+#micButton:active {
+    transform: scale(0.95);
+}
+
+#response {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+}
+
+/* Chat Area */
+#chatArea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+#chatArea::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chatArea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#chatArea::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 3px;
+}
+
+/* Message Bubbles */
+.message {
+    max-width: 85%;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    position: relative;
+    animation: fadeIn 0.3s ease-in-out;
+    line-height: 1.6;
+}
+
+.message.bot {
+    background-color: var(--secondary-bg);
+    margin-right: auto;
+    border-radius: 0.75rem 0.75rem 0.75rem 0;
+    border: 1px solid var(--border-color);
+}
+
+.message.user {
+    background-color: var(--accent-color);
+    color: white;
+    margin-left: auto;
+    border-radius: 0.75rem 0.75rem 0 0.75rem;
+}
+
+.message-content {
+    word-wrap: break-word;
+}
+
+.message-timestamp {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+}
+
+.typing {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--text-secondary);
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+    opacity: 0.6;
+}
+
+.typing:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+/* Input Area */
+#userInput {
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+#userInput:focus {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Button Styles */
+#sendButton, #micButton, #attachButton {
+    transition: all 0.2s ease-in-out;
+}
+
+#sendButton:hover, #micButton:hover, #attachButton:hover {
+    transform: scale(1.1);
+}
+
+#sendButton:active, #micButton:active, #attachButton:active {
+    transform: scale(0.95);
+}
+
+/* Toast Notifications */
+.toast {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 300px;
+}
+
+.toast.success {
+    border-left: 4px solid #48BB78;
+}
+
+.toast.error {
+    border-left: 4px solid #F56565;
+}
+
+.toast.info {
+    border-left: 4px solid #4299E1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typing {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Welcome Message */
+.welcome-message {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-action-button {
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    transition: all 0.2s ease-in-out;
+}
+
+.quick-action-button:hover {
+    background-color: var(--secondary-bg);
+    border-color: var(--accent-color);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .message {
+        max-width: 90%;
+    }
+    
+    #userInput {
+        font-size: 16px; /* Prevents zoom on mobile */
+    }
+
+    .quick-actions {
+        justify-content: center;
+    }
+} 
