@@ -1,0 +1,2 @@
+DineDesk 🍽️ – Your Smart Assistant for Table Booking & Food Delivery
+DineDesk is an AI-powered chatbot that lets users easily book restaurant tables or place food delivery orders through natural conversation. Built for efficiency, convenience, and a seamless dining experience.
