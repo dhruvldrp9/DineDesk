@@ -1,0 +1,381 @@
+{
+  "user_email": "abc@gmail.com",
+  "chats": [
+    {
+      "id": "f81affae-eb77-4aaa-abb6-b81d03761785",
+      "user_email": "abc@gmail.com",
+      "session_title": "Chat Jun 12, 2025 at 10:33 AM",
+      "started_at": "2025-06-12T10:33:00.073909",
+      "last_activity": "2025-06-13T05:13:24.038272",
+      "status": "ended",
+      "message_count": 5,
+      "messages": [
+        {
+          "id": "4c0d6175-5554-4cf1-8af9-5ff16d2e3819",
+          "chat_session_id": "f81affae-eb77-4aaa-abb6-b81d03761785",
+          "message_type": "bot",
+          "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+          "message_data": {
+            "id": "cfb87d95-386c-4809-aa4a-c8df82f3ef80",
+            "type": "bot",
+            "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+            "timestamp": "2025-06-12T10:33:00.075327",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-12T10:33:00.075400"
+        },
+        {
+          "id": "05b62e01-6d55-46a4-8fda-fa8b5c1a5dcd",
+          "chat_session_id": "f81affae-eb77-4aaa-abb6-b81d03761785",
+          "message_type": "user",
+          "content": "I want a delivery",
+          "message_data": {
+            "id": "c25196cb-7f46-49ac-90c9-020d3e419741",
+            "type": "user",
+            "content": "I want a delivery",
+            "timestamp": "2025-06-12T10:56:09.175695",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-12T10:56:09.175797"
+        },
+        {
+          "id": "763d669d-14a7-481a-8e5d-995a13723d27",
+          "chat_session_id": "f81affae-eb77-4aaa-abb6-b81d03761785",
+          "message_type": "bot",
+          "content": "You want delivery. What city or area are you in?",
+          "message_data": {
+            "id": "604999e4-907c-49e3-ba2a-e35cf01c1040",
+            "type": "bot",
+            "content": "You want delivery. What city or area are you in?",
+            "timestamp": "2025-06-12T10:56:09.591083",
+            "message_type": "text",
+            "quick_replies": [
+              {
+                "text": "Find restaurants",
+                "action": "search"
+              },
+              {
+                "text": "Book a table",
+                "action": "booking"
+              },
+              {
+                "text": "Order food",
+                "action": "order"
+              },
+              {
+                "text": "Get help",
+                "action": "help"
+              }
+            ]
+          },
+          "timestamp": "2025-06-12T10:56:09.591183"
+        },
+        {
+          "id": "964d4221-2d08-49f2-92ad-beb87b6c11cd",
+          "chat_session_id": "f81affae-eb77-4aaa-abb6-b81d03761785",
+          "message_type": "user",
+          "content": "what are the latest news today",
+          "message_data": {
+            "id": "283c9b89-b290-46a6-b49b-de1859fa8cc1",
+            "type": "user",
+            "content": "what are the latest news today",
+            "timestamp": "2025-06-13T05:12:52.020820",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T05:12:52.020965"
+        },
+        {
+          "id": "e17409de-7e6a-4bfb-8af2-ce2585d9d1fa",
+          "chat_session_id": "f81affae-eb77-4aaa-abb6-b81d03761785",
+          "message_type": "bot",
+          "content": "News isn't relevant. You wanted delivery. What city or area are you in?",
+          "message_data": {
+            "id": "8fbb749a-ddf7-4897-b288-f72a0435cdba",
+            "type": "bot",
+            "content": "News isn't relevant. You wanted delivery. What city or area are you in?",
+            "timestamp": "2025-06-13T05:12:52.398554",
+            "message_type": "text",
+            "quick_replies": [
+              {
+                "text": "Find restaurants",
+                "action": "search"
+              },
+              {
+                "text": "Book a table",
+                "action": "booking"
+              },
+              {
+                "text": "Order food",
+                "action": "order"
+              },
+              {
+                "text": "Get help",
+                "action": "help"
+              }
+            ]
+          },
+          "timestamp": "2025-06-13T05:12:52.398672"
+        }
+      ]
+    },
+    {
+      "id": "c450128a-8e28-434b-9d27-be8d8d59028c",
+      "user_email": "abc@gmail.com",
+      "session_title": "Chat Jun 12, 2025 at 10:57 AM",
+      "started_at": "2025-06-12T10:57:04.300006",
+      "last_activity": "2025-06-12T10:57:24.975974",
+      "status": "ended",
+      "message_count": 1,
+      "messages": [
+        {
+          "id": "ab01e032-bdea-4e29-bb85-402ff5c98645",
+          "chat_session_id": "c450128a-8e28-434b-9d27-be8d8d59028c",
+          "message_type": "bot",
+          "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+          "message_data": {
+            "id": "c09500a1-2d96-4f79-aba6-275e2f80d8e9",
+            "type": "bot",
+            "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+            "timestamp": "2025-06-12T10:57:04.300765",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-12T10:57:04.300832"
+        }
+      ]
+    },
+    {
+      "id": "77af5365-0422-4601-b32f-19195a25056b",
+      "user_email": "abc@gmail.com",
+      "session_title": "Chat Jun 12, 2025 at 10:57 AM",
+      "started_at": "2025-06-12T10:57:04.302967",
+      "last_activity": "2025-06-12T10:57:04.303836",
+      "status": "active",
+      "message_count": 1,
+      "messages": [
+        {
+          "id": "3f3f80a5-5bbe-4127-bfc8-5ca4b456b9ac",
+          "chat_session_id": "77af5365-0422-4601-b32f-19195a25056b",
+          "message_type": "bot",
+          "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+          "message_data": {
+            "id": "186a0510-3d5a-4d35-a03e-90cc506293ca",
+            "type": "bot",
+            "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+            "timestamp": "2025-06-12T10:57:04.303732",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-12T10:57:04.303831"
+        }
+      ]
+    },
+    {
+      "id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+      "user_email": "abc@gmail.com",
+      "session_title": "Chat Jun 13, 2025 at 05:13 AM",
+      "started_at": "2025-06-13T05:13:24.028405",
+      "last_activity": "2025-06-13T06:41:00.237744",
+      "status": "active",
+      "message_count": 7,
+      "messages": [
+        {
+          "id": "480999a0-fd75-47a6-9477-14c6eec39333",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "bot",
+          "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+          "message_data": {
+            "id": "f2b377df-414f-4dbe-9321-e104d41764f0",
+            "type": "bot",
+            "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+            "timestamp": "2025-06-13T05:13:24.036301",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T05:13:24.036457"
+        },
+        {
+          "id": "df0a8cce-d1ce-4d79-9424-49dcd18e447e",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "user",
+          "content": "what are the",
+          "message_data": {
+            "id": "2025a2b0-024b-4870-a247-491db9206db2",
+            "type": "user",
+            "content": "what are the",
+            "timestamp": "2025-06-13T06:30:29.919513",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T06:30:29.919680"
+        },
+        {
+          "id": "c36ee8c2-020b-41fe-b7c1-df0dca641a34",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "bot",
+          "content": "You didn't mention a location or cuisine. What city or cuisine are you looking for?",
+          "message_data": {
+            "id": "105048b4-f917-453f-ade5-0e3eb2610ed9",
+            "type": "bot",
+            "content": "You didn't mention a location or cuisine. What city or cuisine are you looking for?",
+            "timestamp": "2025-06-13T06:30:30.314419",
+            "message_type": "text",
+            "quick_replies": [
+              {
+                "text": "Find restaurants",
+                "action": "search"
+              },
+              {
+                "text": "Book a table",
+                "action": "booking"
+              },
+              {
+                "text": "Order food",
+                "action": "order"
+              },
+              {
+                "text": "Get help",
+                "action": "help"
+              }
+            ]
+          },
+          "timestamp": "2025-06-13T06:30:30.314571"
+        },
+        {
+          "id": "87089361-56c5-40b1-8a76-216aab835856",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "user",
+          "content": "hello",
+          "message_data": {
+            "id": "a6028ceb-52df-440a-98e5-f9f3f15fe8b1",
+            "type": "user",
+            "content": "hello",
+            "timestamp": "2025-06-13T06:40:50.331935",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T06:40:50.332065"
+        },
+        {
+          "id": "5cf66af4-c2fc-4c38-8f79-3b2fc3270e02",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "bot",
+          "content": "Hello. You didn't mention a location or cuisine. What city?",
+          "message_data": {
+            "id": "afb587e9-8a97-4296-8d42-222dff9f3bec",
+            "type": "bot",
+            "content": "Hello. You didn't mention a location or cuisine. What city?",
+            "timestamp": "2025-06-13T06:40:50.715202",
+            "message_type": "text",
+            "quick_replies": [
+              {
+                "text": "Find restaurants",
+                "action": "search"
+              },
+              {
+                "text": "Book a table",
+                "action": "booking"
+              },
+              {
+                "text": "Order food",
+                "action": "order"
+              },
+              {
+                "text": "Get help",
+                "action": "help"
+              }
+            ]
+          },
+          "timestamp": "2025-06-13T06:40:50.715353"
+        },
+        {
+          "id": "d2035622-91f6-4247-8365-90465d2de6a3",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "user",
+          "content": "Italian cuisine in New York",
+          "message_data": {
+            "id": "84345c0c-6e0f-41d7-b70a-7b5f17c37e2e",
+            "type": "user",
+            "content": "Italian cuisine in New York",
+            "timestamp": "2025-06-13T06:40:58.940955",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T06:40:58.941094"
+        },
+        {
+          "id": "798b8f0d-ed50-42d5-a87e-db465d667cec",
+          "chat_session_id": "0dfed846-44d0-44d5-b674-1966ed099ed2",
+          "message_type": "bot",
+          "content": "I'm here to help you with restaurant bookings and food orders. How can I assist you today?",
+          "message_data": {
+            "id": "9da17220-6950-47c2-a710-030c6294c9df",
+            "type": "bot",
+            "content": "I'm here to help you with restaurant bookings and food orders. How can I assist you today?",
+            "timestamp": "2025-06-13T06:41:00.237591",
+            "message_type": "text",
+            "quick_replies": [
+              {
+                "text": "Find restaurants",
+                "action": "search"
+              },
+              {
+                "text": "Book a table",
+                "action": "booking"
+              },
+              {
+                "text": "Order food",
+                "action": "order"
+              }
+            ]
+          },
+          "timestamp": "2025-06-13T06:41:00.237740"
+        }
+      ]
+    },
+    {
+      "id": "162572f5-baa0-4c32-940c-404598da33a1",
+      "user_email": "abc@gmail.com",
+      "session_title": "Chat Jun 13, 2025 at 05:13 AM",
+      "started_at": "2025-06-13T05:13:24.038700",
+      "last_activity": "2025-06-13T05:13:24.039702",
+      "status": "active",
+      "message_count": 1,
+      "messages": [
+        {
+          "id": "532da369-16f3-4a6a-a7d2-874f8d533b63",
+          "chat_session_id": "162572f5-baa0-4c32-940c-404598da33a1",
+          "message_type": "bot",
+          "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+          "message_data": {
+            "id": "c6960f80-f5c3-498f-801c-0b7eb67070cb",
+            "type": "bot",
+            "content": "Hello Gabbar! I'm ready to help you with restaurant recommendations, bookings, and more. What can I do for you?",
+            "timestamp": "2025-06-13T05:13:24.039599",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T05:13:24.039697"
+        }
+      ]
+    },
+    {
+      "id": "247a3cb1-490a-4c40-a7d1-0d26f9b4b200",
+      "user_email": "abc@gmail.com",
+      "session_title": "Chat Jun 13, 2025 at 06:42 AM",
+      "started_at": "2025-06-13T06:42:14.587716",
+      "last_activity": "2025-06-13T06:42:14.589469",
+      "status": "active",
+      "message_count": 1,
+      "messages": [
+        {
+          "id": "2ada2869-122d-4962-9b6a-e968e785ac0b",
+          "chat_session_id": "247a3cb1-490a-4c40-a7d1-0d26f9b4b200",
+          "message_type": "bot",
+          "content": "Welcome back, Gabbar! I'm your AI restaurant assistant. I can help you book tables, browse menus, and order food. How can I assist you today?",
+          "message_data": {
+            "id": "4ca298f7-2cb8-41d1-a82f-6c8c7faa10de",
+            "type": "bot",
+            "content": "Welcome back, Gabbar! I'm your AI restaurant assistant. I can help you book tables, browse menus, and order food. How can I assist you today?",
+            "timestamp": "2025-06-13T06:42:14.589333",
+            "message_type": "text"
+          },
+          "timestamp": "2025-06-13T06:42:14.589454"
+        }
+      ]
+    }
+  ]
+}

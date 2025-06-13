@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineDesk - AI Restaurant Assistant</title>
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        'primary-light': '#FF8A5B',
+                        'primary-dark': '#E55A2B',
+                        'gray-50': '#F8F9FA',
+                        'gray-100': '#F1F3F4',
+                        'gray-700': '#2D3748',
+                        'gray-600': '#4A5568',
+                        'border-light': '#E2E8F0'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'Segoe UI', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'typing': 'typing 1.5s steps(3, end) infinite',
+                        'fade-in': 'fadeIn 0.3s ease-in-out',
+                        'slide-up': 'slideUp 0.3s ease-out'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-border-light shadow-sm">
+            <div class="max-w-4xl mx-auto px-4 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                            <i class="fas fa-utensils text-white text-sm"></i>
+                        </div>
+                        <h1 class="text-xl font-semibold text-gray-700">DineDesk</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Voice Assistant Button -->
+                        <a href="{{ url_for('voice_assistant') }}" class="flex items-center space-x-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium">
+                            <i class="fas fa-microphone text-xs"></i>
+                            <span>Voice Assistant</span>
+                        </a>
+                        
+                        <!-- User Info with dropdown -->
+                        <div class="relative">
+                            <button id="user-menu-btn" class="flex items-center space-x-2 text-sm text-gray-600 hover:text-gray-800 transition-colors">
+                                <i class="fas fa-user-circle text-lg"></i>
+                                <span>{{ session.user_name or 'User' }}</span>
+                                <i class="fas fa-chevron-down text-xs"></i>
+                            </button>
+                            
+                            <!-- Dropdown Menu -->
+                            <div id="user-dropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 hidden z-50" style="z-index: 9999;">
+                                <div class="py-1">
+                                    <button id="toggle-history-btn" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors">
+                                        <i class="fas fa-history mr-2"></i>
+                                        Chat History
+                                    </button>
+                                    <div class="border-t border-gray-100"></div>
+                                    <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                        <i class="fas fa-sign-out-alt mr-2"></i>
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="new-chat-btn" class="flex items-center space-x-2 px-3 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors text-sm font-medium">
+                            <i class="fas fa-plus text-xs"></i>
+                            <span>New Chat</span>
+                        </button>
+                        
+                        <div id="connection-status" class="flex items-center space-x-2 text-sm text-gray-600">
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                            <span>Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Chat History Sidebar -->
+        <div id="chat-history-sidebar" class="fixed inset-y-0 left-0 z-50 w-80 bg-white border-r border-gray-200 transform -translate-x-full transition-transform duration-300 ease-in-out">
+            <div class="flex flex-col h-full">
+                <!-- Sidebar Header -->
+                <div class="p-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-800">Chat History</h2>
+                        <button id="close-history-btn" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Chat List -->
+                <div class="flex-1 overflow-y-auto p-4">
+                    <div id="chat-history-list" class="space-y-2">
+                        <!-- Chat sessions will be loaded here -->
+                        <div class="text-center text-gray-500 py-8">
+                            <i class="fas fa-spinner fa-spin text-xl mb-2"></i>
+                            <p>Loading chat history...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content with potential sidebar offset -->
+        <div class="flex-1 flex flex-col max-w-4xl mx-auto w-full transition-all duration-300" id="main-content">
+            <!-- Messages Area -->
+            <div id="messages-container" class="flex-1 overflow-y-auto px-4 py-6 space-y-4">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typing-indicator" class="px-4 pb-2 hidden">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-robot text-gray-600 text-xs"></i>
+                    </div>
+                    <div class="bg-white border border-border-light rounded-lg px-3 py-2">
+                        <div class="flex space-x-1">
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                            <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="bg-white border-t border-border-light p-4">
+                <div class="flex items-center space-x-3">
+                    <!-- Voice Input Button -->
+                    <button id="voice-btn" class="flex-shrink-0 w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <i id="voice-icon" class="fas fa-microphone text-gray-600 text-lg"></i>
+                    </button>
+                    
+                    <!-- Text Input Container -->
+                    <div class="flex-1 relative">
+                        <textarea 
+                            id="message-input" 
+                            placeholder="Type your message or use voice input..."
+                            class="w-full px-4 py-3 pr-12 border border-border-light rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent min-h-[48px] max-h-32"
+                            rows="1"
+                            maxlength="1000"
+                        ></textarea>
+                        <div id="char-counter" class="absolute bottom-2 right-3 text-xs text-gray-400"></div>
+                    </div>
+                    
+                    <!-- Send Button -->
+                    <button id="send-btn" class="flex-shrink-0 w-12 h-12 bg-primary hover:bg-primary-dark rounded-full flex items-center justify-center transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-primary">
+                        <i class="fas fa-paper-plane text-white text-lg"></i>
+                    </button>
+                </div>
+                
+                <!-- Voice Status Indicator -->
+                <div id="voice-status" class="mt-3 text-sm text-center hidden">
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                        <span class="text-gray-600">Listening... Speak now</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toast-container" class="fixed top-4 right-4 space-y-2 z-50"></div>
+
+    <!-- Restaurant Card Modal -->
+    <div id="restaurant-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div id="modal-content" class="p-6">
+                <!-- Modal content will be populated dynamically -->
+            </div>
+            <div class="flex justify-end p-4 border-t border-border-light">
+                <button id="close-modal" class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+    // Standalone User Dropdown Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, setting up user dropdown...');
+        
+        const userMenuBtn = document.getElementById('user-menu-btn');
+        const userDropdown = document.getElementById('user-dropdown');
+        
+        console.log('User menu button:', userMenuBtn);
+        console.log('User dropdown:', userDropdown);
+        
+        if (userMenuBtn && userDropdown) {
+            console.log('Setting up dropdown event listeners...');
+            
+            // Toggle dropdown on user menu button click
+            userMenuBtn.addEventListener('click', function(e) {
+                console.log('User menu button clicked!');
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const isHidden = userDropdown.style.display === 'none' || userDropdown.classList.contains('hidden');
+                console.log('Dropdown is hidden:', isHidden);
+                
+                if (isHidden) {
+                    userDropdown.classList.remove('hidden');
+                    userDropdown.style.display = 'block';
+                    console.log('Showing dropdown');
+                } else {
+                    userDropdown.classList.add('hidden');
+                    userDropdown.style.display = 'none';
+                    console.log('Hiding dropdown');
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!userMenuBtn.contains(e.target) && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.add('hidden');
+                    userDropdown.style.display = 'none';
+                }
+            });
+            
+            // Add hover effect for better UX
+            userMenuBtn.style.cursor = 'pointer';
+            userMenuBtn.style.userSelect = 'none';
+            
+        } else {
+            console.error('User menu elements not found!');
+        }
+    });
+    </script>
+    <script src="{{ url_for('static', filename='js/chat_simple.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/voice_simple.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chat_history.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main_simple.js') }}"></script>
+</body>
+</html>

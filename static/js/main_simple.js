@@ -1,40 +1,26 @@
-// Main JavaScript file for DineDesk application
+// Main JavaScript file for DineDesk application (AJAX version)
 class DineDesk {
     constructor() {
-        this.socket = null;
-        this.isConnected = false;
+        this.isConnected = true;
         this.messageHistory = [];
         this.isTyping = false;
-        
+        this.chatManager = null;
         this.init();
     }
     
     init() {
-        this.initializeSocketIO();
         this.setupEventListeners();
         this.setupAutoResize();
-        this.requestMessageHistory();
-    }
-    
-    initializeSocketIO() {
-        this.socket = io();
+        this.loadMessageHistory();
+        // Initialize chat manager
+        this.chatManager = new ChatManager(this);
+        // Initialize chat history manager
+        this.chatHistory = new ChatHistoryManager(this);
+        // Initialize voice manager
+        this.voiceManager = new VoiceManager(this);
         
-        this.socket.on('connect', () => {
-            console.log('Connected to server');
-            this.isConnected = true;
-            this.updateConnectionStatus(true);
-        });
-        
-        this.socket.on('disconnect', () => {
-            console.log('Disconnected from server');
-            this.isConnected = false;
-            this.updateConnectionStatus(false);
-        });
-        
-        this.socket.on('connect_error', (error) => {
-            console.error('Connection error:', error);
-            this.showToast('Connection error. Please refresh the page.', 'error');
-        });
+        // Make DineDesk globally available for voice manager
+        window.dineDesk = this;
     }
     
     setupEventListeners() {
@@ -56,10 +42,8 @@ class DineDesk {
         // Character counter
         messageInput.addEventListener('input', this.updateCharacterCounter);
         
-        // Voice button (placeholder for future implementation)
-        voiceBtn.addEventListener('click', () => {
-            this.showToast('Voice input feature coming soon!', 'info');
-        });
+        // Voice button functionality will be handled by VoiceManager
+        // Remove placeholder functionality as it's now implemented
         
         // Modal close handlers
         const modal = document.getElementById('restaurant-modal');
@@ -74,6 +58,10 @@ class DineDesk {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') this.closeModal();
         });
+        
+        // New chat button
+        const newChatBtn = document.getElementById('new-chat-btn');
+        newChatBtn.addEventListener('click', () => this.startNewChat());
     }
     
     setupAutoResize() {
@@ -102,41 +90,77 @@ class DineDesk {
         }
     }
     
-    sendMessage() {
+    async sendMessage() {
         const messageInput = document.getElementById('message-input');
         const message = messageInput.value.trim();
         
-        if (!message || !this.isConnected) return;
+        if (!message || this.isTyping) return;
         
         // Clear input
         messageInput.value = '';
         messageInput.style.height = 'auto';
         this.updateCharacterCounter();
         
-        // Send message via Socket.IO
-        this.socket.emit('send_message', { message: message });
-    }
-    
-    requestMessageHistory() {
-        if (this.isConnected) {
-            this.socket.emit('get_message_history');
-        }
-    }
-    
-    updateConnectionStatus(connected) {
-        const statusElement = document.getElementById('connection-status');
-        const statusDot = statusElement.querySelector('.w-2');
-        const statusText = statusElement.querySelector('span');
+        // Show typing indicator
+        this.showTypingIndicator();
         
-        if (connected) {
-            statusDot.classList.remove('bg-red-500');
-            statusDot.classList.add('bg-green-500', 'animate-pulse');
-            statusText.textContent = 'Connected';
-        } else {
-            statusDot.classList.remove('bg-green-500', 'animate-pulse');
-            statusDot.classList.add('bg-red-500');
-            statusText.textContent = 'Disconnected';
+        try {
+            const response = await fetch('/api/send_message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: message })
+            });
+            
+            const data = await response.json();
+            
+            if (response.ok) {
+                // Display user message
+                this.chatManager.displayMessage(data.user_message);
+                
+                // Simulate typing delay and display bot response
+                setTimeout(() => {
+                    this.hideTypingIndicator();
+                    this.chatManager.displayBotResponseWithStreaming(data.bot_response);
+                }, 500);
+            } else {
+                this.hideTypingIndicator();
+                this.showToast(data.error || 'Error sending message', 'error');
+            }
+            
+        } catch (error) {
+            this.hideTypingIndicator();
+            this.showToast('Network error. Please try again.', 'error');
+            console.error('Error sending message:', error);
         }
+    }
+    
+    async loadMessageHistory() {
+        try {
+            const response = await fetch('/api/get_history');
+            const messages = await response.json();
+            
+            if (response.ok) {
+                this.chatManager.loadMessageHistory(messages);
+            }
+        } catch (error) {
+            console.error('Error loading message history:', error);
+        }
+    }
+    
+    showTypingIndicator() {
+        if (this.isTyping) return;
+        this.isTyping = true;
+        const typingIndicator = document.getElementById('typing-indicator');
+        typingIndicator.classList.remove('hidden');
+        this.scrollToBottom();
+    }
+    
+    hideTypingIndicator() {
+        this.isTyping = false;
+        const typingIndicator = document.getElementById('typing-indicator');
+        typingIndicator.classList.add('hidden');
     }
     
     showToast(message, type = 'info', duration = 3000) {
@@ -188,7 +212,12 @@ class DineDesk {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
     
-    // Utility method to format timestamps
+    clearMessages() {
+        const messagesContainer = document.getElementById('messages-container');
+        messagesContainer.innerHTML = '';
+        this.messageHistory = [];
+    }
+    
     formatTimestamp(isoString) {
         const date = new Date(isoString);
         const now = new Date();
@@ -203,11 +232,54 @@ class DineDesk {
         }
     }
     
-    // Utility method to sanitize HTML content
     sanitizeHTML(str) {
         const temp = document.createElement('div');
         temp.textContent = str;
         return temp.innerHTML;
+    }
+    
+    startNewChat() {
+        // Clear current messages
+        const messagesContainer = document.getElementById('messages-container');
+        messagesContainer.innerHTML = '';
+        
+        // Reset message history in memory
+        this.messageHistory = [];
+        
+        // Clear server-side session
+        fetch('/new-chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show welcome message for new chat
+                this.displayWelcomeMessage();
+                this.showToast('New chat started', 'success');
+            }
+        })
+        .catch(error => {
+            console.error('Error starting new chat:', error);
+            this.showToast('Error starting new chat', 'error');
+        });
+    }
+    
+    displayWelcomeMessage() {
+        const welcomeMessage = {
+            type: 'bot',
+            content: "Hi! Welcome to DineDesk! I'm here to help you with restaurant reservations and food delivery. Are you looking to:\n\n1. Make a restaurant reservation\n2. Order food for delivery\n3. Browse restaurants in your area",
+            timestamp: new Date().toISOString(),
+            quickReplies: [
+                { text: "Make a Reservation", action: "reservation" },
+                { text: "Order Food", action: "delivery" },
+                { text: "Browse Restaurants", action: "browse" }
+            ]
+        };
+        
+        this.chatManager.displayMessage(welcomeMessage, true);
     }
 }
 
@@ -215,8 +287,3 @@ class DineDesk {
 document.addEventListener('DOMContentLoaded', () => {
     window.dineDesk = new DineDesk();
 });
-
-// Export for use in other modules
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = DineDesk;
-}

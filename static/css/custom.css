@@ -1,0 +1,231 @@
+/* Custom animations and styles for DineDesk */
+
+@keyframes typing {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 1; }
+    100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* Smooth scrolling for messages */
+#messages-container {
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+#messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+#messages-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#messages-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+#messages-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Message bubbles */
+.message-bubble {
+    animation: fadeIn 0.3s ease-in-out;
+    max-width: 80%;
+}
+
+.user-message {
+    background: linear-gradient(135deg, #FF6B35, #FF8A5B);
+    color: white;
+    margin-left: auto;
+    border-radius: 18px 18px 4px 18px;
+}
+
+.bot-message {
+    background: white;
+    border: 1px solid #E2E8F0;
+    color: #2D3748;
+    margin-right: auto;
+    border-radius: 18px 18px 18px 4px;
+}
+
+/* Restaurant cards */
+.restaurant-card {
+    transition: all 0.3s ease;
+    animation: slideUp 0.4s ease-out;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Quick reply buttons */
+.quick-reply-btn {
+    transition: all 0.2s ease;
+    border: 1px solid #E2E8F0;
+    background: white;
+    color: #4A5568;
+}
+
+.quick-reply-btn:hover {
+    background: #FF6B35;
+    color: white;
+    border-color: #FF6B35;
+    transform: translateY(-1px);
+}
+
+/* Voice recording animation */
+.voice-recording {
+    position: relative;
+}
+
+.voice-recording::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #FF6B35;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse-ring 1.5s infinite;
+}
+
+/* Input area enhancements */
+#message-input {
+    min-height: 44px;
+    max-height: 120px;
+    transition: all 0.2s ease;
+}
+
+#message-input:focus {
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+/* Auto-resize textarea */
+.auto-resize {
+    overflow: hidden;
+    resize: none;
+}
+
+/* Toast notifications */
+.toast {
+    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toast.success {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    color: white;
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #EF4444, #F87171);
+    color: white;
+}
+
+.toast.info {
+    background: linear-gradient(135deg, #3B82F6, #60A5FA);
+    color: white;
+}
+
+/* Loading states */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Action buttons */
+.action-btn {
+    transition: all 0.2s ease;
+    background: #FF6B35;
+    color: white;
+}
+
+.action-btn:hover {
+    background: #E55A2B;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+}
+
+.action-btn:active {
+    transform: translateY(0);
+}
+
+/* Restaurant rating stars */
+.rating-stars {
+    color: #FCD34D;
+}
+
+/* Responsive design enhancements */
+@media (max-width: 768px) {
+    .message-bubble {
+        max-width: 90%;
+    }
+    
+    .restaurant-card {
+        margin: 0 -8px;
+    }
+    
+    #messages-container {
+        padding: 1rem;
+    }
+}
+
+/* Dark mode preparation */
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles can be added here for future enhancement */
+}
+
+/* Accessibility enhancements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus indicators for keyboard navigation */
+button:focus,
+input:focus,
+textarea:focus {
+    outline: 2px solid #FF6B35;
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .bot-message {
+        border-width: 2px;
+        border-color: #2D3748;
+    }
+    
+    .quick-reply-btn {
+        border-width: 2px;
+    }
+}
